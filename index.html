@@ -3,17 +3,13 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Responsive Login Monitor</title>
+    <title>Responsive Login Monitor with DataTables</title>
+    <!-- Bootstrap CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- DataTables CSS -->
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.13.1/css/jquery.dataTables.min.css">
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.13.1/css/dataTables.bootstrap5.min.css">
     <style>
-        /* Custom styling for table on desktop */
-        .table-striped tbody tr:nth-of-type(odd) {
-            background-color: #f9f9f9;
-        }
-        .table-dark th {
-            background-color: #343a40;
-            color: #ffffff;
-        }
         .text-primary {
             font-weight: bold;
             color: #0d6efd !important;
@@ -22,8 +18,7 @@
             border: none;
             background: none;
         }
-        
-        /* Hide columns on smaller screens */
+        /* Hide specific columns on smaller screens */
         @media (max-width: 767px) {
             .password-col, .create-col, .update-col {
                 display: none;
@@ -35,7 +30,7 @@
     <div class="container mt-5">
         <h2 class="text-center text-primary mb-4">Login Monitor</h2>
         <div class="table-responsive">
-            <table class="table table-bordered table-striped">
+            <table id="loginTable" class="table table-bordered table-striped">
                 <thead class="table-dark">
                     <tr>
                         <th>#</th>
@@ -76,6 +71,34 @@
         </div>
     </div>
 
+    <!-- Bootstrap JS -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <!-- jQuery -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <!-- DataTables JS -->
+    <script src="https://cdn.datatables.net/1.13.1/js/jquery.dataTables.min.js"></script>
+    <script src="https://cdn.datatables.net/1.13.1/js/dataTables.bootstrap5.min.js"></script>
+    
+    <script>
+        $(document).ready(function() {
+            $('#loginTable').DataTable({
+                responsive: true,  // Enable responsive layout
+                columnDefs: [
+                    { targets: 'password-col', visible: true, orderable: false }, // password column hidden on mobile
+                    { targets: 'create-col', visible: true },
+                    { targets: 'update-col', visible: true }
+                ],
+                language: {
+                    search: "ค้นหา:",
+                    lengthMenu: "แสดง _MENU_ รายการต่อหน้า",
+                    info: "แสดง _START_ ถึง _END_ จากทั้งหมด _TOTAL_ รายการ",
+                    paginate: {
+                        previous: "ก่อนหน้า",
+                        next: "ถัดไป"
+                    }
+                }
+            });
+        });
+    </script>
 </body>
 </html>
